@@ -229,7 +229,7 @@ mixin TransitionData {
 @immutable
 class GoTransitionPage
     with TransitionData
-    implements CustomTransitionPage, PageTransitionsBuilder {
+    implements CustomTransitionPage<dynamic>, PageTransitionsBuilder {
   /// Creates a [GoTransitionPage].
   ///
   /// It's compatible with both [Page] and [PageTransitionsBuilder].
@@ -302,6 +302,20 @@ class GoTransitionPage
       ),
     );
   }
+
+  @override
+  bool get canPop => true;
+
+  void onPopInvokedWithResult(bool didPop, Object? result) {
+    if (didPop) {
+      // Handle the pop result
+    }
+  }
+
+  @override
+  void Function(bool, dynamic) get onPopInvoked => (bool didPop, dynamic result) {
+    onPopInvokedWithResult(didPop, result);
+  };
 }
 
 extension on GoTransitionStyle {
